@@ -576,8 +576,8 @@ footer a {
 </footer>
 
 <script>
-const SUPABASE_URL = 'https://xrpiskdtioumfnznmzxy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhycGlza2R0aW91bWZuem5tenh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1ODAyNDUsImV4cCI6MjA4NjE1NjI0NX0.mJqkcPJRXfKcD1--E9FAipHh5QX1ciOM95pkSM9kCJg';
+// Consultation API with SSL (port 3443)
+const API_URL = 'https://' + window.location.hostname + ':3443/submit';
 
 const form = document.getElementById('consultForm');
 const submitBtn = document.getElementById('submitBtn');
@@ -610,13 +610,10 @@ form.addEventListener('submit', async function(e) {
   };
 
   try {
-    const response = await fetch(SUPABASE_URL + '/rest/v1/consultation_requests', {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     });
@@ -627,7 +624,7 @@ form.addEventListener('submit', async function(e) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       const err = await response.json();
-      console.error('Supabase error:', err);
+      console.error('API error:', err);
       alert('Something went wrong. Please try again.');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Submit Consultation Request';
